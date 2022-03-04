@@ -21,6 +21,8 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
   maven-test:
+    docker:
+      - image: cimg/base:stable
     steps:
       - run:
           name: Save test results
