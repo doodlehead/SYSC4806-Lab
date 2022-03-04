@@ -1,5 +1,6 @@
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,5 +28,20 @@ public class TestingWebApplicationTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Single page Address Book app")));
+    }
+
+    @Test
+    public void testAddAddressBook() throws Exception {
+        // Test adding address book
+        this.mockMvc.perform(post("/api/book/"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("{\"id\":1,\"buddies\":[]}")));
+
+        // Test getting address book
+        this.mockMvc.perform(get("/api/book/"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("[{\"id\":1,\"buddies\":[]}]")));
     }
 }
