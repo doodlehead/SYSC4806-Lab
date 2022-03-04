@@ -20,6 +20,16 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+  maven-test:
+    steps:
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -29,6 +39,5 @@ workflows:
       - say-hello
   maven_test:
     jobs:
-      - maven/test # checkout, build, test, and upload test results
-      - store_test_results:
-          path: test-results
+      - maven-test
+      # - maven/test # checkout, build, test, and upload test results
