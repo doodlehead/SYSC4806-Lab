@@ -20,7 +20,7 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-  maven-test:
+  save-results:
     docker:
       - image: cimg/base:stable
     steps:
@@ -41,5 +41,5 @@ workflows:
       - say-hello
   maven_test:
     jobs:
-      - maven-test
-      # - maven/test # checkout, build, test, and upload test results
+      - maven/test # checkout, build, test, and upload test results
+      - save-results
