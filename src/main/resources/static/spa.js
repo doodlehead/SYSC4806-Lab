@@ -1,5 +1,5 @@
 let addressBooks = [];
-const host = 'whispering-lowlands-82355.herokuapp.com'
+const hostname = 'whispering-lowlands-82355.herokuapp.com'
 
 // Render according to locally stored addressBooks var
 function renderAddressBooks() {
@@ -49,7 +49,7 @@ function renderAddressBook(elem) {
 function deleteBuddy(bookId, buddyId) {
     $.ajax({
         type: "DELETE",
-        url: `https://${host}/api/book/${bookId}/buddy/${buddyId}`
+        url: `https://${hostname}/api/book/${bookId}/buddy/${buddyId}`
     }).then(data => {
         // update data + rerender
         getAddressBooks();
@@ -59,7 +59,7 @@ function deleteBuddy(bookId, buddyId) {
 function createBuddy(bookId) {
     $.ajax({
         type: "POST",
-        url: `https://${host}/api/book/${bookId}/buddy`,
+        url: `https://${hostname}/api/book/${bookId}/buddy`,
         data: JSON.stringify({
             name: $('#name').val(),
             address: $('#address').val(),
@@ -79,7 +79,7 @@ function createBuddy(bookId) {
 
 function getAddressBooks() {
     $.ajax({
-        url: "https://${host}/api/book/"
+        url: `https://${hostname}/api/book/`
     }).then(data => {
         addressBooks = data;
         renderAddressBooks();
@@ -89,7 +89,7 @@ function getAddressBooks() {
 function createAddressBook() {
     $.ajax({
         type: "POST",
-        url: "https://${host}/api/book/"
+        url: `https://${hostname}/api/book/`
     }).then(data => {
         addressBooks.push(data);
         // Update UI
